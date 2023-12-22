@@ -1,4 +1,5 @@
 import { currentUser } from "@clerk/nextjs";
+import { redirect } from "next/navigation";
 
 import { db } from "@/lib/db";
 
@@ -14,7 +15,8 @@ export const getSelf = async () => {
   });
 
   if (!user) {
-    throw new Error("Not found");
+    redirect('/not-found')
+    return
   }
 
   return user;
@@ -32,7 +34,8 @@ export const getSelfByUsername = async (username: string) => {
   });
 
   if (!user) {
-    throw new Error("User not found");
+    redirect('/not-found')
+    return
   }
 
   if (self.username !== user.username) {
